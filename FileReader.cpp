@@ -8,6 +8,8 @@
 
 #include "FileReader.hpp"
 #include <cstdlib>
+#include <iostream>
+#include <sstream>
 
 FileReader::FileReader(const char * filePath, int numberLines)
     :_lineCount(numberLines)
@@ -22,7 +24,7 @@ FileReader::FileReader(const char * filePath, int numberLines)
 }
 
 FileReader::~FileReader() {
-    fclose(_file); 
+    fclose(_file);
 }
 
 void FileReader::goEnd() {
@@ -33,12 +35,14 @@ void FileReader::goForward() {
     if (fseek(_file, --_pos, SEEK_SET))//if succsess fseek returns 0
         perror("fseek() failed");
 }
-void FileReader::show() {
-    printf("Printing last %d lines -\n", _lineCount);
+std::string FileReader::show() {
+    std::stringstream ss;
+    ss << "Printing last " << _lineCount<< " lines"<< std::endl;
     char str[200];
     while (fgets(str, sizeof(str), _file))
-        printf("%s", str);
-    printf("\n\n");
+        ss << str;
+    ss<<"\n\n";
+    return ss.str();
 }
 void FileReader::readLines() {
     goEnd();
@@ -52,4 +56,3 @@ void FileReader::readLines() {
                 break;
     }
 }
-

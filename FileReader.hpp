@@ -1,5 +1,5 @@
 //
-//  HelperFunctions.hpp
+//  FileReader.hpp
 //  Kursayin
 //
 //  Created by Liana Mkhitaryan on 10/9/19.
@@ -10,16 +10,17 @@
 #define FileReader_hpp
 
 #include <stdio.h>
+#include <string>
 
 class FileReader{
 public:
     FileReader(const char * filePath, int numberLines = 3);
-    void show();
+    std::string show();
     ~FileReader();
 private:
-    FILE* _file;
-    unsigned long long _pos;
     int _lineCount;
+    FILE* _file;
+    long _pos;
     void goForward();
     void goEnd();
     void readLines();
